@@ -14,6 +14,12 @@ class TestBaseModel(unittest.TestCase):
     Inherits from unittest
     """
 
+    def test_name(self):
+        """Test name attribute type"""
+        new = Review()
+        new.name = "Kaicee"
+        self.assertEqual(type(new.name), str)
+
     def test_instance(self):
         r = Review()
         self.assertIsInstance(Review, r)
