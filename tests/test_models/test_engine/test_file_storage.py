@@ -32,6 +32,18 @@ class TestFileStorage(unittest.TestCase):
             obj = all_objs[obj_id]
         self.assertIsInstance(obj, BaseModel)
 
+    def test_save_and_reload(self):
+        """Tests the save method of FileStorage class"""
+        b = BaseModel()
+        b.save()
+        storage.reload()
+        b_key = f"{type(b).__name__}.{b.id}"
+        all_objs = storage.all()
+        for obj_id in all_objs.keys():
+            if obj_id == b_key:
+                obj = all_objs[obj_id]
+        self.assertEqual(obj.updated_at, b.updated_at)
+
 
 if __name__ == "__main__":
     unittest.main()
