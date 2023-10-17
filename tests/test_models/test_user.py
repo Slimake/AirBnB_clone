@@ -14,17 +14,17 @@ class TestUser(unittest.TestCase):
     Inherits from BaseModel
     """
 
-    def test_first_name(self):
-        """Test name attribute type"""
+    def test_id(self):
+        """Test id attribute type"""
         new = User()
-        new.first_name = "Kaicee"
-        self.assertEqual(type(new.first_name), str)
+        new.id = "Kaicee"
+        self.assertEqual(type(new.id), str)
 
     def test_password(self):
         """Test password attribute type"""
         new = User()
-        new.password = "809889hhgcs9898"
-        self.assertEqual(type(new.password), str)
+        new.state_id = "809889hhgcs9898"
+        self.assertEqual(type(new.state_id), str)
 
     def test_Updated_at_type(self):
         """Test updated_at attribu8te type"""

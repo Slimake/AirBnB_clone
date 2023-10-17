@@ -32,6 +32,14 @@ class TestFileStorage(unittest.TestCase):
             obj = all_objs[obj_id]
         self.assertIsInstance(obj, BaseModel)
 
+    def test_file_path(self):
+        """Tests class attributes."""
+        self.assertTrue(hasattr(FileStorage, "_FileStorage__file_path"))
+
+    def test_objects(self):
+        """Tests class attributes."""
+        self.assertTrue(hasattr(FileStorage, "_FileStorage__objects"))
+
     def test_save(self):
         """Tests the save method of FileStorage class"""
         b = BaseModel()
