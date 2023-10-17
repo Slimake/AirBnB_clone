@@ -13,6 +13,11 @@ class TestReview(unittest.TestCase):
     """Class defines Test file for Review
     Inherits from BaseModel
     """
+    def test_place_attr(self):
+        """Tests class attributes."""
+        self.assertTrue(hasattr(Review, "user_id"))
+        self.assertTrue(hasattr(Review, "place_id"))
+        self.assertTrue(hasattr(Review, "text"))
 
     def test_place_id(self):
         """Test name attribute type"""
@@ -25,6 +30,12 @@ class TestReview(unittest.TestCase):
         new = Review()
         new.text = "Nice comfortable home"
         self.assertEqual(type(new.text), str)
+
+    def test_user_id(self):
+        """Test password attribute type"""
+        new = Review()
+        new.user_id = "43537823"
+        self.assertEqual(type(new.user_id), str)
 
     def test_Updated_at_type(self):
         """Test updated_at attribu8te type"""
