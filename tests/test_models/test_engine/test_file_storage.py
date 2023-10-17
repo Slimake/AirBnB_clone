@@ -32,7 +32,15 @@ class TestFileStorage(unittest.TestCase):
             obj = all_objs[obj_id]
         self.assertIsInstance(obj, BaseModel)
 
-    def test_save_and_reload(self):
+    def test_save(self):
+        """Tests the save method of FileStorage class"""
+        b = BaseModel()
+        before = b.updated_at
+        b.save()
+        after = b.updated_at
+        self.assertNotEqual(before, after)
+
+    def test_reload(self):
         """Tests the save method of FileStorage class"""
         b = BaseModel()
         b.save()
