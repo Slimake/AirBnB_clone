@@ -30,12 +30,12 @@
 }
 
 .filters .popover {
-    display: none;
+    visibility: hidden;
 }
 
 .filters .locations:hover .popover, 
 .filters .amenities:hover .popover {
-    display: block;
+    visibility: visible;
     position: relative;
     top: 19px;
     left: -30px;
