@@ -31,11 +31,6 @@
 
 .filters .popover {
     visibility: hidden;
-}
-
-.filters .locations:hover .popover, 
-.filters .amenities:hover .popover {
-    visibility: visible;
     position: relative;
     top: 19px;
     left: -30px;
@@ -49,24 +44,33 @@
     padding-left: 0px;
 }
 
+.filters .locations:hover .popover, 
+.filters .amenities:hover .popover {
+    visibility: visible;
+}
+
 .filters .popover li {
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding-left: 30px;
 }
 
+.filters .popover li.pad {
+    margin-top: 30px;
+}
+
 .filters .popover li h2 {
+    margin: 0;
     margin-left: -15px;
 }
 
-.filters .popover > ul {
+.filters .popover li ul {
     list-style: none;
     padding: 0px;
-    margin-bottom: 30px;
 }
 
-.filters .popover h2 {
-    margin: 0;
+.filters .popover li ul li {
+    padding: 0px;
 }
 
 button {
