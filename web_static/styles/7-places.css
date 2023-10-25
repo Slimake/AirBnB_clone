@@ -5,6 +5,7 @@
 }
 
 .places h1 {
+    text-align: left;
     margin: 0;
     margin-top: 20px;
     flex-basis: 100%;
