@@ -6,6 +6,8 @@ import unittest
 
 
 class TestBaseModel(unittest.TestCase):
+    """Defines test for BaseModel class"""
+
     def setUp(self):
         """Declare a variable basemodel set to instance of BaseModel"""
         self.basemodel1 = BaseModel()
