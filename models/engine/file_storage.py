@@ -1,5 +1,5 @@
 #!usr/bin/python3
-"""Module FileStorage"""
+"""Module file_storage"""
 
 import json
 
@@ -40,6 +40,7 @@ class FileStorage:
         (only if the JSON file (__file_path) exists; otherwise, do nothing
         """
         from models.base_model import BaseModel
+        from models.user import User
 
         try:
             with open(type(self).__file_path, "r", encoding="utf-8") as file:
@@ -47,7 +48,11 @@ class FileStorage:
 
             n_dict = json.loads(json_str)
             for key, value in n_dict.items():
-                inst = BaseModel(**value)
+                classname = key.split(".")[0]
+                if classname == "BaseModel":
+                    inst = BaseModel(**value)
+                elif classname == "User":
+                    inst = User(**value)
                 type(self).__objects[key] = inst
         except FileNotFoundError:
             pass
