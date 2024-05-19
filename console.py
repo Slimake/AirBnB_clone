@@ -17,7 +17,11 @@ class HBNBCommand(cmd.Cmd):
         dic = fs.all()
 
         if line:
-            classes = ["BaseModel", "User"]
+            classes = [
+                        "BaseModel", "User",
+                        "Place", "State",
+                        "City", "Amenity", "Review"
+                      ]
             obj_list = []
             for key in dic.keys():
                 dic_classname = key.split(".")[0]
@@ -40,6 +44,11 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         from models.base_model import BaseModel
         from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
 
         fs = FileStorage()
         dic = fs.all()
@@ -48,7 +57,12 @@ class HBNBCommand(cmd.Cmd):
         if line:
             classes = {
                 "BaseModel": BaseModel,
-                "User": User
+                "User": User,
+                "Place": Place,
+                "State": State,
+                "City": City,
+                "Amenity": Amenity,
+                "Review": Review
             }
 
             for name, value in classes.items():
@@ -73,6 +87,12 @@ class HBNBCommand(cmd.Cmd):
         dic = fs.all()
         args = line.split()
 
+        classes = [
+                    "BaseModel", "User",
+                    "Place", "State",
+                    "City", "Amenity", "Review"
+                  ]
+
         try:
             classname = args[0]
             _id = args[1]
@@ -83,12 +103,6 @@ class HBNBCommand(cmd.Cmd):
                 _id = None
 
         if classname is not None:
-            classes = []
-            for key in dic.keys():
-                dic_classname = key.split(".")[0]
-                if dic_classname not in classes:
-                    classes.append(dic_classname)
-
             if classname not in classes:
                 print("** class doesn't exist **")
                 return
@@ -114,6 +128,12 @@ class HBNBCommand(cmd.Cmd):
         dic = fs.all()
         args = line.split()
 
+        classes = [
+                    "BaseModel", "User",
+                    "Place", "State",
+                    "City", "Amenity", "Review"
+                  ]
+
         try:
             _classname = args[0]
             _id = args[1]
@@ -124,11 +144,6 @@ class HBNBCommand(cmd.Cmd):
                 _id = None
 
         if _classname is not None:
-            classes = []
-            for key in dic.keys():
-                dic_classname = key.split(".")[0]
-                if dic_classname not in classes:
-                    classes.append(dic_classname)
             if _classname not in classes:
                 print("** class doesn't exist **")
                 return
@@ -154,6 +169,12 @@ class HBNBCommand(cmd.Cmd):
         dic = fs.all()
         args = line.split()
 
+        classes = [
+                    "BaseModel", "User",
+                    "Place", "State",
+                    "City", "Amenity", "Review"
+                  ]
+
         try:
             _class = args[0]
             _id = args[1]
@@ -170,11 +191,6 @@ class HBNBCommand(cmd.Cmd):
                 _attr_val = None
 
         if _class is not None:
-            classes = []
-            for key in dic.keys():
-                classname = key.split(".")[0]
-                if classname not in classes:
-                    classes.append(classname)
             if _class not in classes:
                 print("** class doesn't exist **")
                 return
