@@ -41,6 +41,11 @@ class FileStorage:
         """
         from models.base_model import BaseModel
         from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
 
         try:
             with open(type(self).__file_path, "r", encoding="utf-8") as file:
@@ -53,6 +58,16 @@ class FileStorage:
                     inst = BaseModel(**value)
                 elif classname == "User":
                     inst = User(**value)
+                elif classname == "State":
+                    inst = State(**value)
+                elif classname == "City":
+                    inst = City(**value)
+                elif classname == "Amenity":
+                    inst = Amenity(**value)
+                elif classname == "Place":
+                    inst = Place(**value)
+                elif classname == "Review":
+                    inst = Review(**value)
                 type(self).__objects[key] = inst
         except FileNotFoundError:
             pass
