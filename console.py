@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module console.py"""
+"""Module console"""
 
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
@@ -17,78 +17,136 @@ class HBNBCommand(cmd.Cmd):
         dic = fs.all()
 
         if line:
-            if line != "BaseModel":
-                print("** class doesn't exist **")
-                return
-            
+            classes = ["BaseModel", "User"]
+            obj_list = []
             for key in dic.keys():
-                key_list = key.split(".")
-                if key_list[0] == "BaseModel":
+                dic_classname = key.split(".")[0]
+
+                if dic_classname == line:
                     obj = dic[key]
                     obj_list.append(str(obj))
+
+            if line not in classes:
+                print("** class doesn't exist **")
+                return
             print(obj_list)
+            return
         else:
             for obj in dic.values():
                 obj_list.append(str(obj))
             print(obj_list)
+            return
 
     def do_create(self, line):
+        from models.base_model import BaseModel
+        from models.user import User
+
+        fs = FileStorage()
+        dic = fs.all()
+        classname = ""
+
         if line:
-            if line == "BaseModel":
-                bm = BaseModel()
-                bm.save()
-                print(bm.id)
-            else:
-                print("** class doesn't exist **")
+            classes = {
+                "BaseModel": BaseModel,
+                "User": User
+            }
+
+            for name, value in classes.items():
+                if name == line:
+                    classname = value
+                elif name == line:
+                    classname = value
+                else:
+                    if line not in classes:
+                        print("** class doesn't exist **")
+                        return
         else:
             print("** class name missing **")
+            return
+
+        bm = classname()
+        bm.save()
+        print(bm.id)
 
     def do_destroy(self, line):
-        line_list = line.split()
+        fs = FileStorage()
+        dic = fs.all()
+        args = line.split()
 
-        if not line:
+        try:
+            classname = args[0]
+            _id = args[1]
+        except IndexError:
+            if len(args) == 0:
+                classname = None
+            elif len(args) == 1:
+                _id = None
+
+        if classname is not None:
+            classes = []
+            for key in dic.keys():
+                dic_classname = key.split(".")[0]
+                if dic_classname not in classes:
+                    classes.append(dic_classname)
+
+            if classname not in classes:
+                print("** class doesn't exist **")
+                return
+        else:
             print("** class name missing **")
             return
-        if line_list[0] != "BaseModel":
-            print("** class doesn't exist **")
-            return
-        
-        try:
-            if line_list[1]:
-                fs = FileStorage()
-                dic = fs.all()
-                for key in dic.keys():
-                    key_list = key.split(".")
-                    if line_list[1] == key_list[1]:
-                        del dic[key]
-                        fs.save()
-                        return
+
+        if _id is not None:
+            key = classname + "." + _id
+            if key not in dic.keys():
                 print("** no instance found **")
-        except IndexError:
+                return
+        else:
             print("** instance id missing **")
+            return
+
+        del dic[key]
+        fs.save()
+        return
 
     def do_show(self, line):
-        line_list = line.split()
+        fs = FileStorage()
+        dic = fs.all()
+        args = line.split()
 
-        if not line:
-            print("** class name missing **")
-            return
-        if line_list[0] != "BaseModel":
+        try:
+            _classname = args[0]
+            _id = args[1]
+        except IndexError:
+            if len(args) == 0:
+                print("** class name missing **")
+                return
+            elif len(args) == 1:
+                print("** instance id missing **")
+                return
+
+        classes = []
+        for key in dic.keys():
+            dic_classname = key.split(".")[0]
+            if dic_classname not in classes:
+                classes.append(dic_classname)
+
+        if _classname not in classes:
             print("** class doesn't exist **")
             return
-        try:
-            if line_list[1]:
-                fs = FileStorage()
-                dic = fs.all()
-                for key in dic.keys():
-                    key_list = key.split(".")
-                    if line_list[1] == key_list[1]:
-                        obj = dic[key]
-                        print(obj)
-                        return
+
+        if _id is not None:
+            key = _classname + "." + _id
+            if key in dic.keys():
+                obj = dic[key]
+                print(obj)
+                return
+            else:
                 print("** no instance found **")
-        except IndexError:
+                return
+        else:
             print("** instance id missing **")
+            return
 
     def do_update(self, line):
         fs = FileStorage()
@@ -100,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
             _id = args[1]
             _attr_name = args[2]
             _attr_val = args[3]
-        except:
+        except IndexError:
             if len(args) == 0:
                 _class = None
             elif len(args) == 1:
@@ -109,8 +167,6 @@ class HBNBCommand(cmd.Cmd):
                 _attr_name = None
             elif len(args) == 3:
                 _attr_val = None
-            elif len(args) == 4:
-                pass
 
         if _class is not None:
             classes = []
@@ -118,14 +174,13 @@ class HBNBCommand(cmd.Cmd):
                 classname = key.split(".")[0]
                 if classname not in classes:
                     classes.append(classname)
+            if _class not in classes:
+                print("** class doesn't exist **")
+                return
         else:
             print("** class name missing **")
             return
 
-        if _class not in classes:
-            print("** class doesn't exist **")
-            return
-        
         if _id is not None:
             key = _class + "." + _id
             if key not in dic.keys():
@@ -134,22 +189,22 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** instance id missing **")
             return
-            
+
         if _attr_name is None:
             print("** attribute name missing **")
             return
-        
+
         if _attr_val is None:
             print("** value missing **")
             return
-        
+
         key = _class + "." + _id
         inst = dic[key]
         if hasattr(inst, _attr_name):
             attr_type = type(getattr(inst, _attr_name))
 
             if attr_type == str:
-                setattr(inst, _attr_name, str(_attr_val))
+                setattr(inst, _attr_name, str(_attr_val[1:-1]))
             elif attr_type == int:
                 setattr(inst, _attr_name, int(_attr_val))
             elif attr_type == float:
@@ -178,25 +233,25 @@ class HBNBCommand(cmd.Cmd):
 
     def help_all(self):
         print("Prints all string representation of all "
-                "instances based or not on the class name. ")
+              "instances based or not on the class name. ")
 
     def help_create(self):
         print("Creates a new instance of BaseModel, saves it "
-                "(to the JSON file) and prints the id.")
+              "(to the JSON file) and prints the id.")
 
     def help_destroy(self):
         print("Deletes an instance based on the class name and "
-                "id (save the change into the JSON file).")
+              "id (save the change into the JSON file).")
 
     def help_update(self):
         print("Updates an instance based on the class name "
-                "and id by adding or updating attribute "
-                    "(save the change into the JSON file). ")
-        
+              "and id by adding or updating attribute "
+              "(save the change into the JSON file). ")
+
     def help_show(self):
         print("Prints the string representation of "
-                "an instance based on the class name and id.")
-        
+              "an instance based on the class name and id.")
+
     def help_EOF(self):
         print("Quit command to exit the program\n")
 
