@@ -119,20 +119,21 @@ class HBNBCommand(cmd.Cmd):
             _id = args[1]
         except IndexError:
             if len(args) == 0:
-                print("** class name missing **")
-                return
+                _classname = None
             elif len(args) == 1:
-                print("** instance id missing **")
+                _id = None
+
+        if _classname is not None:
+            classes = []
+            for key in dic.keys():
+                dic_classname = key.split(".")[0]
+                if dic_classname not in classes:
+                    classes.append(dic_classname)
+            if _classname not in classes:
+                print("** class doesn't exist **")
                 return
-
-        classes = []
-        for key in dic.keys():
-            dic_classname = key.split(".")[0]
-            if dic_classname not in classes:
-                classes.append(dic_classname)
-
-        if _classname not in classes:
-            print("** class doesn't exist **")
+        else:
+            print("** class name missing **")
             return
 
         if _id is not None:
