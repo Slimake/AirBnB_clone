@@ -28,7 +28,7 @@ class TestPlace(unittest.TestCase):
     def test_description_attr(self):
         """Test the description attribute of Place class"""
         self.assertTrue(hasattr(self.place, "description"))
-        self.assertEqual(type(self.place.description), int)
+        self.assertEqual(type(self.place.description), str)
 
     def test_latitude_attr(self):
         """Test the latitude attribute of Place class"""
