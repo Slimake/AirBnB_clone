@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>Airbnb Clone</title>
@@ -13,8 +13,10 @@
                 height: 70px;
                 width: 100%;
             }
-            section {
-                min-height: 79.9vh;
+            main {
+                min-height: calc(100vh - 70px - 60px);
+                min-height: -webkit-calc(100vh - 70px - 60px);
+                min-height: -moz-calc(100vh - 70px - 60px);
             }
             footer {
                 background-color: #00FF00;
@@ -27,7 +29,7 @@
     </head>
     <body>
         <header></header>
-        <section></section>
+        <main></main>
         <footer>Best School</footer>
     </body>
 </html>
