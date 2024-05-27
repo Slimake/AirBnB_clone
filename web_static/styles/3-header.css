@@ -5,7 +5,11 @@ header {
     width: 100%;
 }
 
-header img {
-    margin-top: 5px;
+header div {
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-position-y: 5px;
+    width: inherit;
+    height: inherit;
     margin-left: 20px;
 }
