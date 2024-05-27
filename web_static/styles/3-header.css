@@ -1,15 +1,9 @@
 header {
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-position: 20px 5px;
     background-color: white;
     border-bottom: 1px solid #CCCCCC;
     height: 70px;
     width: 100%;
-}
-
-header div {
-    background-image: url("../images/logo.png");
-    background-repeat: no-repeat;
-    background-position-y: 5px;
-    width: inherit;
-    height: inherit;
-    margin-left: 20px;
 }
